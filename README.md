@@ -9,3 +9,11 @@ To run demo just copy and paste into your terminal:
 ```bash
 wget https://raw.githubusercontent.com/skordas/demos/master/NTO/nto_demo.sh && bash nto_demo.sh
 ```
+
+## CI watrcher scheduler.
+
+To run demo:
+
+```bash
+wget https://raw.githubusercontent.com/skordas/demos/master/ci-watcher-scheduler/ci-watcher-scheduler.sh && bash ci-watcher-scheduler.sh
+```
