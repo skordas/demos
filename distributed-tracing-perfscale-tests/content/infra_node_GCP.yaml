@@ -1,0 +1,63 @@
+apiVersion: machine.openshift.io/v1beta1
+kind: MachineSet
+metadata:
+  creationTimestamp: null
+  labels:
+    machine.openshift.io/cluster-api-cluster: ${CLUSTER_NAME}
+    machine.openshift.io/cluster-api-machine-role: infra
+    machine.openshift.io/cluster-api-machine-type: infra
+  name: ${CLUSTER_NAME}-infra-a
+  namespace: openshift-machine-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      machine.openshift.io/cluster-api-cluster: ${CLUSTER_NAME}
+      machine.openshift.io/cluster-api-machineset: ${CLUSTER_NAME}-infra-a
+  template:
+    metadata:
+      labels:
+        machine.openshift.io/cluster-api-cluster: ${CLUSTER_NAME}
+        machine.openshift.io/cluster-api-machine-role: infra
+        machine.openshift.io/cluster-api-machine-type: infra
+        machine.openshift.io/cluster-api-machineset: ${CLUSTER_NAME}-infra-a
+    spec:
+      lifecycleHooks: {}
+      metadata:
+        labels:
+          node-role.kubernetes.io/infra: ""
+      providerSpec:
+        value:
+          apiVersion: machine.openshift.io/v1beta1
+          canIPForward: false
+          credentialsSecret:
+            name: gcp-cloud-credentials
+          deletionProtection: false
+          disks:
+          - autoDelete: true
+            boot: true
+            image: projects/rhcos-cloud/global/images/rhcos-417-94-202408270355-0-gcp-x86-64
+            labels: {}
+            sizeGb: 100
+            type: pd-ssd
+          kind: GCPMachineProviderSpec
+          machineType: n1-standard-16
+          metadata:
+            creationTimestamp: null
+          networkInterfaces:
+          - network: ${CLUSTER_NAME}-network
+            subnetwork: ${CLUSTER_NAME}-worker-subnet
+          preemptible: true
+          projectID: openshift-qe
+          region: us-central1
+          serviceAccounts:
+          - email: ${CLUSTER_NAME}-w@openshift-qe.iam.gserviceaccount.com
+            scopes:
+            - https://www.googleapis.com/auth/cloud-platform
+          shieldedInstanceConfig: {}
+          tags:
+          - ${CLUSTER_NAME}-worker
+          userDataSecret:
+            name: worker-user-data
+          zone: us-central1-a
+

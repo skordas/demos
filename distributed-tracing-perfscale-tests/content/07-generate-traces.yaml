@@ -1,0 +1,32 @@
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: generate-traces
+  namespace: test-generate-traces
+spec:
+  completions: 1
+  parallelism: 1
+  template:
+    spec:
+      nodeSelector:
+        node-role.kubernetes.io/worker: ""
+      containers:
+      - name: loadgen
+        image: ghcr.io/honeycombio/loadgen/loadgen:latest
+        args:
+        - --dataset=loadset
+        - --tps=10
+        - --depth=50
+        - --nspans=50
+        - --runtime=300s
+        - --ramptime=1s
+        - --tracecount=3000
+        - --protocol=grpc
+        - --sender=otel
+        - --host=dev-collector.test-perfscale:4317
+        - --loglevel=info
+        - --insecure
+      restartPolicy: Never
+  backoffLimit: 4
+

@@ -10,10 +10,15 @@ To run demo just copy and paste into your terminal:
 wget https://raw.githubusercontent.com/skordas/demos/master/NTO/nto_demo.sh && bash nto_demo.sh
 ```
 
-## CI watrcher scheduler.
+## CI watcher scheduler.
 
 To run demo:
 
 ```bash
 wget https://raw.githubusercontent.com/skordas/demos/master/ci-watcher-scheduler/ci-watcher-scheduler.sh && bash ci-watcher-scheduler.sh
 ```
+
+## Distributed Tracing - PerfScale tests.
+
+Test results of Perf-Scale test of Tempo and OpenTelementery operator.
+For more detail please check [README](./distributed-tracing-perfscale-tests/README.md)
