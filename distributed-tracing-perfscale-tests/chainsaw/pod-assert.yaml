@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    batch.kubernetes.io/job-name: testjob
+    job-name: testjob
+  namespace: chainsaw-demo
+status:
+  containerStatuses:
+  - image: quay.io/quay/busybox:latest
+    name: busybox
+    state:
+      terminated:
+        exitCode: 0
+        reason: Completed

@@ -1,0 +1,37 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: testconfigmap
+  namespace: chainsaw-demo
+data:
+# Just some sample data
+  game.properties: |
+    enemies=aliens
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: testjob
+  namespace: chainsaw-demo
+spec:
+  template:
+    spec:
+      containers:
+      - name: busybox
+        image: quay.io/quay/busybox
+        resources:
+          requests:
+            memory: "50Mi"
+            cpu: "10m"
+        command: [ "/bin/echo" ]
+        args: [ "Hello, World!" ]
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/config
+      volumes:
+        - name: config-volume
+          configMap:
+            name: testconfigmap
+      restartPolicy: Never
+  backoffLimit: 4
