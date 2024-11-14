@@ -22,7 +22,7 @@ for i in $(seq 0 $r); do
   fi
 done
 
-oc port-forward -n tutorial-application svc/frontend-service 4000:4000
+oc port-forward -n tutorial-application svc/frontend-service 4000:4000 &
 sleep $sleep_time
 oc expose service frontend-service -n tutorial-application
 sleep $sleep_time

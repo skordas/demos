@@ -38,7 +38,7 @@ rm -rf performance-dashboards
 
 ## Generate traces
 
-- Run `./01-generate_traces.sh` to generate traces.
+- Run `./04-generate_traces.sh` to generate traces.
 
 ## Cleanup
 
